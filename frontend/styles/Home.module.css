@@ -1,0 +1,73 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.containerTitle{
+  display: block;
+  margin: 8% 65% 0 0;
+}
+
+
+.title { 
+  color: #00B4CC;
+   font-family: 'Rouge Script', cursive; 
+   font-size: 105px; 
+   font-weight: normal; 
+   line-height: 48px; 
+   margin: 0 0 50px; 
+   text-align: center; text-shadow: 1px 1px 2px #082b34; 
+  }
+
+.search {
+  width: auto;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 500px;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 46px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+    width: 40px;
+    height: 46px;
+    border: 1px solid #00B4CC;
+    background: #00B4CC;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+    display: inline-block;
+    position: fixed;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  display: block;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.charts{
+  display: block;
+  width: 15%;
+  height: 11%;
+  position: absolute;
+  right: 43%;
+  left: 43%;
+  margin: auto;
+  top: 50%;
+  color: black;
+}
