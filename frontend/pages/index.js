@@ -66,7 +66,6 @@ export default function Home() {
     //reset to zero
     setLabel([])
     setValue([])
-
    const res = await fetch(`http://${process.env.BACKENDHOST}:5000/predict`,{
         method: "POST",
         body: JSON.stringify({
