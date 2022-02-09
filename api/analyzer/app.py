@@ -8,9 +8,9 @@ CORS(app)
 api  = Api(app)
 
 
-@app.route("/")
-def hello():
-    return "Hello World!"
+@app.route("/health")
+def health():
+    return '{"response":"ok"}'
 
 class Input_data(Resource): 
     
