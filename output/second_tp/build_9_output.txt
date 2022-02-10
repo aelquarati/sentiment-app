@@ -1,0 +1,198 @@
+Started by user jenkins
+Obtained Jenkinsfile from git git@github.com:aelquarati/sentiment-app.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/build_nodejs_app
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github_jenkins
+ > /usr/bin/git rev-parse --resolve-git-dir /var/jenkins_home/workspace/build_nodejs_app/.git # timeout=10
+Fetching changes from the remote Git repository
+ > /usr/bin/git config remote.origin.url git@github.com:aelquarati/sentiment-app.git # timeout=10
+Fetching upstream changes from git@github.com:aelquarati/sentiment-app.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+using GIT_SSH to set credentials SSH private key file. for github
+ > /usr/bin/git fetch --tags --force --progress -- git@github.com:aelquarati/sentiment-app.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision fa04fe3911078c482fea37d1aeb42f34b6cc04fc (refs/remotes/origin/main)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f fa04fe3911078c482fea37d1aeb42f34b6cc04fc # timeout=10
+Commit message: "edit folders"
+ > /usr/bin/git rev-list --no-walk 918a87d70b778055275f84d6d9db4e19209d6efd # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Run Builds)
+[Pipeline] parallel
+[Pipeline] { (Branch: Build Frontend)
+[Pipeline] { (Branch: Build Backend)
+[Pipeline] stage
+[Pipeline] { (Build Frontend)
+[Pipeline] stage
+[Pipeline] { (Build Backend)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/build_nodejs_app/frontend
+[Pipeline] {
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/build_nodejs_app/api
+[Pipeline] {
+[Pipeline] echo
+BACKENDHOST=192.168.1.220 > .env.local
+[Pipeline] isUnix
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
+[Pipeline] sh
++ docker build -t frontend:latest .
+Sending build context to Docker daemon  417.8kB
+
++ docker build -t api:latest .
+Sending build context to Docker daemon  11.26kB
+
+Step 1/10 : FROM python:3.7-alpine
+ ---> a1034fd13493
+Step 2/10 : WORKDIR /api
+ ---> Using cache
+ ---> 4cc466daee04
+Step 3/10 : ENV FLASK_APP=flask_app.py
+ ---> Using cache
+ ---> 3245a549e132
+Step 4/10 : ENV FLASK_RUN_HOST=0.0.0.0
+ ---> Using cache
+ ---> 43072f21a20a
+Step 5/10 : RUN apk add --no-cache gcc musl-dev linux-headers
+ ---> Using cache
+ ---> 39fbd365b171
+Step 6/10 : COPY . .
+ ---> Using cache
+ ---> 9740fdc1c34f
+Step 7/10 : RUN pip install -r requirements.txt
+ ---> Using cache
+ ---> a7f14bd3a436
+Step 8/10 : ENV FLASK_APP=/api/analyzer/app.py
+Step 1/6 : FROM node:lts
+ ---> affe728e127a
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 1d1a0ed966c6
+Step 3/6 : COPY . ./
+ ---> Using cache
+ ---> 7e731059bbf6
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> ebe0daafde8e
+Step 5/6 : EXPOSE 3000
+ ---> Using cache
+ ---> f795c5f30c01
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Using cache
+ ---> e8a0c3038538
+Successfully built e8a0c3038538
+Successfully tagged frontend:latest
+ ---> Using cache
+ ---> 3423dcf7c08f
+Step 9/10 : EXPOSE 5000
+ ---> Using cache
+ ---> 3fb34b98f46d
+Step 10/10 : CMD ["flask", "run"]
+ ---> Using cache
+ ---> d12fc74c554d
+Successfully built d12fc74c554d
+Successfully tagged api:latest
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker-compose up -d
+FRONTEND is up-to-date
+BACKEND_API is up-to-date
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run TESTS)
+[Pipeline] parallel
+[Pipeline] { (Branch: Test Integrity Backend)
+[Pipeline] { (Branch: Test Integrity FrontEnd to Backend)
+[Pipeline] stage
+[Pipeline] { (Test Integrity Backend)
+[Pipeline] stage
+[Pipeline] { (Test Integrity FrontEnd to Backend)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[Pipeline] sh
++ curl -H 'Accept: application/json' http://192.168.1.220:5000/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    17  100    17    0     0   1596      0 --:--:-- --:--:-- --:--:--  1700
++ curl -H 'Accept: application/json' http://192.168.1.220:3000/health_call_api
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  1492  100  1492    0     0  55809      0 --:--:-- --:--:-- --:--:-- 57384
+[Pipeline] echo
+Connection UP
+[Pipeline] }
+[Pipeline] echo
+Connection UP
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

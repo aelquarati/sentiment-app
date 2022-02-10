@@ -1,0 +1,310 @@
+Started by user jenkins
+Obtained Jenkinsfile from git git@github.com:aelquarati/sentiment-app.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/build_nodejs_app
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github_jenkins
+ > /usr/bin/git rev-parse --resolve-git-dir /var/jenkins_home/workspace/build_nodejs_app/.git # timeout=10
+Fetching changes from the remote Git repository
+ > /usr/bin/git config remote.origin.url git@github.com:aelquarati/sentiment-app.git # timeout=10
+Fetching upstream changes from git@github.com:aelquarati/sentiment-app.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+using GIT_SSH to set credentials SSH private key file. for github
+ > /usr/bin/git fetch --tags --force --progress -- git@github.com:aelquarati/sentiment-app.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 918a87d70b778055275f84d6d9db4e19209d6efd (refs/remotes/origin/main)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f 918a87d70b778055275f84d6d9db4e19209d6efd # timeout=10
+Commit message: "edit deploy stage"
+ > /usr/bin/git rev-list --no-walk 39145b0c3db1c60144b57df6b8b9466495706aa1 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Run Builds)
+[Pipeline] parallel
+[Pipeline] { (Branch: Build Frontend)
+[Pipeline] { (Branch: Build Backend)
+[Pipeline] stage
+[Pipeline] { (Build Frontend)
+[Pipeline] stage
+[Pipeline] { (Build Backend)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/build_nodejs_app/frontend
+[Pipeline] {
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/build_nodejs_app/api
+[Pipeline] {
+[Pipeline] echo
+BACKENDHOST=192.168.1.220 > .env.local
+[Pipeline] isUnix
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
+[Pipeline] sh
++ docker build -t frontend:latest .
++ docker build -t api:latest .
+Sending build context to Docker daemon  11.26kB
+
+Sending build context to Docker daemon  417.8kB
+
+Step 1/6 : FROM node:lts
+ ---> affe728e127a
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 1d1a0ed966c6
+Step 3/6 : COPY . ./
+Step 1/10 : FROM python:3.7-alpine
+ ---> a1034fd13493
+Step 2/10 : WORKDIR /api
+ ---> Using cache
+ ---> 4cc466daee04
+Step 3/10 : ENV FLASK_APP=flask_app.py
+ ---> Using cache
+ ---> 3245a549e132
+Step 4/10 : ENV FLASK_RUN_HOST=0.0.0.0
+ ---> Using cache
+ ---> 43072f21a20a
+Step 5/10 : RUN apk add --no-cache gcc musl-dev linux-headers
+ ---> Using cache
+ ---> 39fbd365b171
+Step 6/10 : COPY . .
+ ---> 7e731059bbf6
+Step 4/6 : RUN npm install
+ ---> Running in 378d0b9ef06b
+ ---> 9740fdc1c34f
+Step 7/10 : RUN pip install -r requirements.txt
+ ---> Running in 35e494920c39
+Collecting flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting flask_restful==0.3.9
+  Downloading Flask_RESTful-0.3.9-py2.py3-none-any.whl (25 kB)
+Collecting vaderSentiment==3.3.2
+  Downloading vaderSentiment-3.3.2-py2.py3-none-any.whl (125 kB)
+Collecting flask-cors==3.0.10
+  Downloading Flask_Cors-3.0.10-py2.py3-none-any.whl (14 kB)
+Collecting click>=5.1
+  Downloading click-8.0.3-py3-none-any.whl (97 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-3.0.3-py3-none-any.whl (133 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-2.0.3-py3-none-any.whl (289 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting aniso8601>=0.82
+  Downloading aniso8601-9.0.1-py2.py3-none-any.whl (52 kB)
+Collecting pytz
+  Downloading pytz-2021.3-py2.py3-none-any.whl (503 kB)
+Collecting six>=1.3.0
+  Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+Collecting requests
+  Downloading requests-2.27.1-py2.py3-none-any.whl (63 kB)
+Collecting importlib-metadata
+  Downloading importlib_metadata-4.10.1-py3-none-any.whl (17 kB)
+Collecting MarkupSafe>=2.0
+  Downloading MarkupSafe-2.0.1-cp37-cp37m-musllinux_1_1_x86_64.whl (30 kB)
+Collecting typing-extensions>=3.6.4
+  Downloading typing_extensions-4.0.1-py3-none-any.whl (22 kB)
+Collecting zipp>=0.5
+  Downloading zipp-3.7.0-py3-none-any.whl (5.3 kB)
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.10.8-py2.py3-none-any.whl (149 kB)
+Collecting charset-normalizer~=2.0.0
+  Downloading charset_normalizer-2.0.11-py3-none-any.whl (39 kB)
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.8-py2.py3-none-any.whl (138 kB)
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+Installing collected packages: zipp, typing-extensions, MarkupSafe, importlib-metadata, Werkzeug, urllib3, Jinja2, itsdangerous, idna, click, charset-normalizer, certifi, six, requests, pytz, flask, aniso8601, vaderSentiment, flask-restful, flask-cors
+Successfully installed Jinja2-3.0.3 MarkupSafe-2.0.1 Werkzeug-2.0.3 aniso8601-9.0.1 certifi-2021.10.8 charset-normalizer-2.0.11 click-8.0.3 flask-1.1.2 flask-cors-3.0.10 flask-restful-0.3.9 idna-3.3 importlib-metadata-4.10.1 itsdangerous-2.0.1 pytz-2021.3 requests-2.27.1 six-1.16.0 typing-extensions-4.0.1 urllib3-1.26.8 vaderSentiment-3.3.2 zipp-3.7.0
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+[0m[91mWARNING: You are using pip version 21.2.4; however, version 22.0.3 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+[0mRemoving intermediate container 35e494920c39
+ ---> a7f14bd3a436
+Step 8/10 : ENV FLASK_APP=/api/analyzer/app.py
+ ---> Running in 636a09c3e6d0
+Removing intermediate container 636a09c3e6d0
+ ---> 3423dcf7c08f
+Step 9/10 : EXPOSE 5000
+ ---> Running in 6170510ea4af
+Removing intermediate container 6170510ea4af
+ ---> 3fb34b98f46d
+Step 10/10 : CMD ["flask", "run"]
+ ---> Running in f19a2cfec56b
+Removing intermediate container f19a2cfec56b
+ ---> d12fc74c554d
+Successfully built d12fc74c554d
+Successfully tagged api:latest
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+
+added 473 packages, and audited 474 packages in 37s
+
+83 packages are looking for funding
+  run `npm fund` for details
+
+3 vulnerabilities (1 moderate, 2 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[91mnpm notice 
+npm notice New minor version of npm available! 8.1.2 -> 8.4.1
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.4.1>
+npm notice Run `npm install -g npm@8.4.1` to update!
+npm notice 
+[0mRemoving intermediate container 378d0b9ef06b
+ ---> ebe0daafde8e
+Step 5/6 : EXPOSE 3000
+ ---> Running in d85e13260d55
+Removing intermediate container d85e13260d55
+ ---> f795c5f30c01
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 4ef4578de46b
+Removing intermediate container 4ef4578de46b
+ ---> e8a0c3038538
+Successfully built e8a0c3038538
+Successfully tagged frontend:latest
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker-compose up -d
+Creating network "build_nodejs_app_default" with the default driver
+Creating FRONTEND ... 
+Creating BACKEND_API ... 
+[2A[2K
+Creating FRONTEND    ... [32mdone[0m
+[2B[1A[2K
+Creating BACKEND_API ... [32mdone[0m
+[1B
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run TESTS)
+[Pipeline] parallel
+[Pipeline] { (Branch: Test Integrity Backend)
+[Pipeline] { (Branch: Test Integrity FrontEnd to Backend)
+[Pipeline] stage
+[Pipeline] { (Test Integrity Backend)
+[Pipeline] stage
+[Pipeline] { (Test Integrity FrontEnd to Backend)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[Pipeline] sh
++ ls -alh
+total 44K
+drwxr-sr-x  8 jenkins jenkins 4.0K Feb 10 00:02 .
+drwxr-sr-x 11 jenkins jenkins 4.0K Feb  9 21:05 ..
+drwxr-sr-x  8 jenkins jenkins 4.0K Feb 10 00:02 .git
+-rw-r--r--  1 jenkins jenkins 2.8K Feb 10 00:02 Jenkinsfile
+-rw-r--r--  1 jenkins jenkins   25 Jan 29 21:00 README.md
+drwxr-sr-x  5 jenkins jenkins 4.0K Jan 29 21:00 api
+drwxr-sr-x  2 jenkins jenkins 4.0K Feb 10 00:02 api@tmp
+-rw-r--r--  1 jenkins jenkins  291 Feb 10 00:02 docker-compose.yml
+drwxr-sr-x  5 jenkins jenkins 4.0K Feb  9 23:54 frontend
+drwxr-sr-x  2 jenkins jenkins 4.0K Feb 10 00:03 frontend@tmp
+drwxr-sr-x  2 jenkins jenkins 4.0K Jan 29 22:58 output
++ ls -alh
+total 44K
+drwxr-sr-x  8 jenkins jenkins 4.0K Feb 10 00:02 .
+drwxr-sr-x 11 jenkins jenkins 4.0K Feb  9 21:05 ..
+drwxr-sr-x  8 jenkins jenkins 4.0K Feb 10 00:02 .git
+-rw-r--r--  1 jenkins jenkins 2.8K Feb 10 00:02 Jenkinsfile
+-rw-r--r--  1 jenkins jenkins   25 Jan 29 21:00 README.md
+drwxr-sr-x  5 jenkins jenkins 4.0K Jan 29 21:00 api
+drwxr-sr-x  2 jenkins jenkins 4.0K Feb 10 00:02 api@tmp
+-rw-r--r--  1 jenkins jenkins  291 Feb 10 00:02 docker-compose.yml
+drwxr-sr-x  5 jenkins jenkins 4.0K Feb  9 23:54 frontend
+drwxr-sr-x  2 jenkins jenkins 4.0K Feb 10 00:03 frontend@tmp
+drwxr-sr-x  2 jenkins jenkins 4.0K Jan 29 22:58 output
+[Pipeline] sh
+[Pipeline] sh
++ curl -H 'Accept: application/json' http://192.168.1.220:5000/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    17  100    17    0     0   3020      0 --:--:-- --:--:-- --:--:--  3400
+[Pipeline] echo
+Connection UP
+[Pipeline] }
++ curl -H 'Accept: application/json' http://192.168.1.220:3000/health_call_api
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:03 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:04 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:06 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:07 --:--:--     0
+100  1492  100  1492    0     0    195      0  0:00:07  0:00:07 --:--:--   336
+100  1492  100  1492    0     0    195      0  0:00:07  0:00:07 --:--:--   434
+[Pipeline] echo
+Connection UP
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
