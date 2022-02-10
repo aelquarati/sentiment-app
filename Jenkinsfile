@@ -59,7 +59,6 @@ pipeline {
                 stage('Test Integrity Backend'){
                     steps{
                         script{
-                            sh "ls -alh"
                             backend_from_frontend= sh(returnStdout: true, script: """curl -H "Accept: application/json"  http://${IP}:5000/health""").trim()
                             if(backend_from_frontend.contains('"response":"ok"')){
                                 echo "Connection UP"
@@ -73,7 +72,6 @@ pipeline {
                 stage('Test Integrity FrontEnd to Backend'){
                     steps{
                         script{
-                            sh "ls -alh"
                             backend_from_frontend= sh(returnStdout: true, script: """curl -H "Accept: application/json"  http://${IP}:3000/health_call_api""").trim()
                             if(backend_from_frontend.contains('"response":"ok"')){
                                 echo "Connection UP"
