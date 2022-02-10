@@ -3,13 +3,14 @@ version: "3"
 services:
   api: 
     container_name: BACKEND_API
-    build: ./api
+    image: api:latest
     restart: unless-stopped
     ports:
       - "5000:5000" 
 
   web:
     container_name: FRONTEND
+    image: frontend:latest
     build: ./frontend
     restart: unless-stopped
     ports:

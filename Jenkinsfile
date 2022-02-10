@@ -1,5 +1,5 @@
 def buildImage(name,path){
-    return docker.build("${name}", "${path}")
+    return docker.build("${name}:latest", "${path}")
 }
 
 pipeline {
