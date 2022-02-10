@@ -48,7 +48,6 @@ pipeline {
                 script{
 
                     sh """
-                    echo "BACKENDHOST=${IP} > ./frontend/.env.local"  
                     docker-compose up -d
                     """
                 }
