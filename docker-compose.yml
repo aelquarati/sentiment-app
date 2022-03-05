@@ -3,6 +3,7 @@ version: "3"
 services:
   api: 
     container_name: BACKEND_API
+    image: api:latest
     build: ./api
     restart: unless-stopped
     ports:
